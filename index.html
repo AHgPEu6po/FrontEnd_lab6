@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Петренко А.О., група IO-24</title>
+</head>
+<body>
+<h1>Інформація про користувача</h1>
+<button id="loadUserBtn">Завантажити інформацію</button>
+
+<div id="userInfo">
+    <img id="userPicture" src="" alt="User Picture">
+    <p><strong>Місто:</strong> <span id="userCity"></span></p>
+    <p><strong>Поштовий індекс:</strong> <span id="userPostcode"></span></p>
+    <p><strong>Телефон:</strong> <span id="userCell"></span></p>
+    <p><strong>Ім'я:</strong> <span id="userName"></span></p>
+</div>
+
+<script>
+        document.getElementById('loadUserBtn').addEventListener('click', () => {
+            fetch('https://randomuser.me/api')
+                .then(response => response.json())
+                .then(data => {
+                    const user = data.results[0];
+
+                    document.getElementById('userPicture').src = user.picture.large;
+                    document.getElementById('userCity').innerText = user.location.city;
+                    document.getElementById('userPostcode').innerText = user.location.postcode;
+                    document.getElementById('userCell').innerText = user.cell;
+                    document.getElementById('userName').innerText = `${user.name.title} ${user.name.first} ${user.name.last}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                });
+        });
+    </script>
+</body>
+</html>
